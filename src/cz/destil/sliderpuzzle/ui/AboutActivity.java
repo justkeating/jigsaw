@@ -1,13 +1,12 @@
 package cz.destil.sliderpuzzle.ui;
 
+import com.actionbarsherlock.app.SherlockActivity;
+
+import cz.destil.sliderpuzzle.R;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockActivity;
-
-import cz.destil.sliderpuzzle.R;
 
 /**
  * 
