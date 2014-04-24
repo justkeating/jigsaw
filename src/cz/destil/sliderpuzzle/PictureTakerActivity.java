@@ -24,7 +24,9 @@ import cz.destil.sliderpuzzle.ui.*;
 
 public class PictureTakerActivity extends Activity {
 	public static final int MEDIA_TYPE_IMAGE = 1;
-	Button takePictureButton;
+	public static final int RESULT_LOAD_IMAGE = 3;
+	public static final int TAKE_PICTURE = 100;
+	Button takePictureButton, selectPictureButton;
 	private Uri fileUri;
 	public static Bitmap bm;
 	
@@ -42,6 +44,8 @@ public class PictureTakerActivity extends Activity {
 		imView8 = (ImageView) findViewById(R.id.imageView8);
 		imView9 = (ImageView) findViewById(R.id.imageView9);*/
 		takePictureButton = (Button) findViewById(R.id.pictureButton);
+		selectPictureButton = (Button) findViewById(R.id.selectPictureButton);
+		
 		takePictureButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -50,21 +54,18 @@ public class PictureTakerActivity extends Activity {
 				Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
 				//in.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-				startActivityForResult(in, 100);
+				startActivityForResult(in, TAKE_PICTURE);
 			}
 		});
-		
-		//if (pieces != null){
-/*			imView1.setImageBitmap(pieces[0]);
-			imView2.setImageBitmap(pieces[3]);
-			imView3.setImageBitmap(pieces[6]);
-			imView4.setImageBitmap(pieces[1]);
-			imView5.setImageBitmap(pieces[4]);
-			imView6.setImageBitmap(pieces[7]);
-			imView7.setImageBitmap(pieces[2]);
-			imView8.setImageBitmap(pieces[5]);*/
-			//imView9.setImageBitmap(pieces[8]);
-		//}
+		selectPictureButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent inB = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(inB, RESULT_LOAD_IMAGE);
+			}
+		});
 	}
 
 	@Override
@@ -78,32 +79,40 @@ public class PictureTakerActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode != RESULT_CANCELED){
-			if (resultCode == RESULT_OK){
-				try {
-					bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-					Intent in = new Intent(this, MainActivity.class);
-					startActivity(in);
-					//ImageSplitTest splitter = new ImageSplitTest(bm);
-					//pieces = splitter.getImages();
-					//imView1.setImageBitmap(pieces[0]);
-					/*imView2.setImageBitmap(pieces[3]);
-					imView3.setImageBitmap(pieces[6]);
-					imView4.setImageBitmap(pieces[1]);
-					imView5.setImageBitmap(pieces[4]);
-					imView6.setImageBitmap(pieces[7]);
-					imView7.setImageBitmap(pieces[2]);
-					imView8.setImageBitmap(pieces[5]);
-					*///imView9.setImageBitmap(pieces[8]);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		if(requestCode == TAKE_PICTURE){
+			if(resultCode != RESULT_CANCELED){
+				if (resultCode == RESULT_OK){
+					try {
+						bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+						Intent in = new Intent(this, MainActivity.class);
+						startActivity(in);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}	
+		}
+		if(requestCode == RESULT_LOAD_IMAGE){
+			if(resultCode != RESULT_CANCELED){
+				if(resultCode == RESULT_OK){
+					try{
+						bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+						Intent in = new Intent(this, MainActivity.class);
+						startActivity(in);
+					}catch(FileNotFoundException e){
+						e.printStackTrace();
+					}catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
+		
 	}
 	//ANDROID/Media 
 	//http://developer.android.com/guide/topics/media/camera.html#saving-media
