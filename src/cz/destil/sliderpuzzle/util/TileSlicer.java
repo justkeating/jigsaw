@@ -25,7 +25,7 @@ import cz.destil.sliderpuzzle.ui.TileView;
 public class TileSlicer {
 
 	private Bitmap original;
-	private int tileSize, gridSize;
+	private int xtileSize, gridSize, ytileSize;
 	private List<Bitmap> slices;
 	private int lastSliceServed;
 	private List<Integer> sliceOrder;
@@ -43,7 +43,8 @@ public class TileSlicer {
 		super();
 		this.original = original;
 		this.gridSize = gridSize;
-		this.tileSize = original.getWidth() / gridSize;
+		this.xtileSize = original.getWidth() / gridSize;
+		this.ytileSize = original.getHeight() / gridSize;
 		this.context = context;
 		slices = new LinkedList<Bitmap>();
 		sliceOriginal();
@@ -62,19 +63,20 @@ public class TileSlicer {
 				if (rowI == gridSize - 1 && colI == gridSize - 1) {
 					continue;
 				} else {
-					x = rowI * tileSize;
-					y = colI * tileSize;
+					x = rowI * xtileSize;
+					y = colI * ytileSize;
 					// slice
-					bitmap = Bitmap.createBitmap(original, x, y, tileSize, tileSize);
+					bitmap = Bitmap.createBitmap(original, x, y, xtileSize, ytileSize);
 					// draw border lines
 					Canvas canvas = new Canvas(bitmap);
 					Paint paint = new Paint();
 					paint.setColor(Color.parseColor("#fbfdff"));
-					int end = tileSize - 1;
-					canvas.drawLine(0, 0, 0, end, paint);
-					canvas.drawLine(0, end, end, end, paint);
-					canvas.drawLine(end, end, end, 0, paint);
-					canvas.drawLine(end, 0, 0, 0, paint);
+					int endx = xtileSize - 1;
+					int endy = ytileSize - 1;
+					canvas.drawLine(0, 0, 0, endx, paint);
+					canvas.drawLine(0, endx, endx, endy, paint);
+					canvas.drawLine(endx, endy, endx, 0, paint);
+					canvas.drawLine(endx, 0, 0, 0, paint);
 					slices.add(bitmap);
 				}
 			}

@@ -26,7 +26,7 @@ public class PictureTakerActivity extends Activity {
 	public static final int MEDIA_TYPE_IMAGE = 1;
 	Button takePictureButton;
 	private Uri fileUri;
-	public Bitmap bm;
+	public static Bitmap bm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
