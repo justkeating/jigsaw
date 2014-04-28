@@ -73,8 +73,8 @@ public class TileSlicer {
 					paint.setColor(Color.parseColor("#fbfdff"));
 					int endx = xtileSize - 1;
 					int endy = ytileSize - 1;
-					canvas.drawLine(0, 0, 0, endx, paint);
-					canvas.drawLine(0, endx, endx, endy, paint);
+					canvas.drawLine(0, 0, 0, endy, paint);
+					canvas.drawLine(0, endy, endx, endy, paint);
 					canvas.drawLine(endx, endy, endx, 0, paint);
 					canvas.drawLine(endx, 0, 0, 0, paint);
 					slices.add(bitmap);
