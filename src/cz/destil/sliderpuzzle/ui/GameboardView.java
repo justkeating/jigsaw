@@ -42,7 +42,7 @@ import cz.destil.sliderpuzzle.util.TileSlicer;
  */
 public class GameBoardView extends RelativeLayout implements OnTouchListener {
 
-	public static final int GRID_SIZE = 3; // 4x4
+	public static final int GRID_SIZE = 3; // 3x3
 
 	public enum Direction {
 		X, Y
@@ -105,10 +105,8 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 		//add code to access from picture
 		
 		//Bitmap original = ((BitmapDrawable) globe).getBitmap();
-		
 		original = PictureTakerActivity.bm;
-		
-		
+		original= Bitmap.createScaledBitmap(original, 500, 500, true);
 		
 		TileSlicer tileSlicer = new TileSlicer(original, GRID_SIZE, getContext());
 		// order slices
