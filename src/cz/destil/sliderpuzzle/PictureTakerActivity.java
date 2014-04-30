@@ -53,6 +53,9 @@ public class PictureTakerActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+				if(fileUri == null){
+					fileUri = getInternalOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+				}
 				//in.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 				startActivityForResult(in, TAKE_PICTURE);
 			}
@@ -84,7 +87,8 @@ public class PictureTakerActivity extends Activity {
 				if (resultCode == RESULT_OK){
 					try {
 						bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-						Intent in = new Intent(this, MainActivity.class);
+						//bm = (Bitmap) data.getExtras().get("data");
+ 						Intent in = new Intent(this, MainActivity.class);
 						startActivity(in);
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
@@ -154,7 +158,9 @@ public class PictureTakerActivity extends Activity {
 	    return mediaFile;
 	}
 
-	
+	private static File getInternalOutputMediaFile(int type){
+		
+	}
 	
 
 }

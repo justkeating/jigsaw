@@ -49,6 +49,7 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 	}; // movement along x or y axis
 
 	private int tileSize;
+	private int xTileSize, yTileSize;
 	private ArrayList<TileView> tiles;
 	private TileView emptyTile, movedTile;
 	private boolean boardCreated;
@@ -78,6 +79,8 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 	private void determineGameboardSizes() {
 		int viewWidth = getWidth();
 		int viewHeight = getHeight();
+		//xTileSize = viewWidth / GRID_SIZE;
+		//yTileSize = viewHeight / GRID_SIZE;
 		// fit in portrait or landscape
 		if (viewWidth > viewHeight) {
 			tileSize = viewHeight / GRID_SIZE;

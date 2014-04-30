@@ -55,6 +55,7 @@ public class TileSlicer {
 	 */
 	private void sliceOriginal() {
 		int x, y;
+		//Bitmap newOriginal = Bitmap.createScaledBitmap(original, original.getHeight(), original.getHeight(), true);
 		Bitmap bitmap;
 		lastSliceServed = 0;
 		for (int rowI = 0; rowI < gridSize; rowI++) {
