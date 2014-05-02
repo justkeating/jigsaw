@@ -2,6 +2,8 @@ package cz.destil.sliderpuzzle.ui;
 
 import java.util.LinkedList;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -34,6 +36,7 @@ public class MainActivity extends SherlockActivity {
 		if (tileOrder != null) {
 			gameBoard.setTileOrder(tileOrder);
 		}
+
 	}
 
 	@Override

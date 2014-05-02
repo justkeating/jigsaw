@@ -51,11 +51,8 @@ public class PictureTakerActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				Intent in = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 				fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-				if(fileUri == null){
-					fileUri = getInternalOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-				}
 				//in.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 				startActivityForResult(in, TAKE_PICTURE);
 			}
@@ -158,9 +155,6 @@ public class PictureTakerActivity extends Activity {
 	    return mediaFile;
 	}
 
-	private static File getInternalOutputMediaFile(int type){
-		
-	}
 	
 
 }
