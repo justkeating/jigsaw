@@ -3,6 +3,7 @@ package cz.destil.sliderpuzzle.ui;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
@@ -22,6 +23,7 @@ import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.Animato
 import com.actionbarsherlock.internal.nineoldandroids.animation.FloatEvaluator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.ObjectAnimator;
 
+import cz.destil.sliderpuzzle.PictureTakerActivity;
 import cz.destil.sliderpuzzle.R;
 import cz.destil.sliderpuzzle.data.Coordinate;
 import cz.destil.sliderpuzzle.util.TileSlicer;
@@ -40,13 +42,14 @@ import cz.destil.sliderpuzzle.util.TileSlicer;
  */
 public class GameBoardView extends RelativeLayout implements OnTouchListener {
 
-	public static final int GRID_SIZE = 4; // 4x4
+	public static final int GRID_SIZE = 3; // 3x3
 
 	public enum Direction {
 		X, Y
 	}; // movement along x or y axis
 
 	private int tileSize;
+	private int xTileSize, yTileSize;
 	private ArrayList<TileView> tiles;
 	private TileView emptyTile, movedTile;
 	private boolean boardCreated;
@@ -54,6 +57,9 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 	private PointF lastDragPoint;
 	private ArrayList<GameTileMotionDescriptor> currentMotionDescriptors;
 	private LinkedList<Integer> tileOrder;
+	private LinkedList<Integer> masterTileOrder;
+	public Bitmap original;
+	//public boolean isWinner = false;
 
 	public GameBoardView(Context context, AttributeSet attrSet) {
 		super(context, attrSet);
@@ -75,6 +81,8 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 	private void determineGameboardSizes() {
 		int viewWidth = getWidth();
 		int viewHeight = getHeight();
+		//xTileSize = viewWidth / GRID_SIZE;
+		//yTileSize = viewHeight / GRID_SIZE;
 		// fit in portrait or landscape
 		if (viewWidth > viewHeight) {
 			tileSize = viewHeight / GRID_SIZE;
@@ -94,14 +102,18 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 	 */
 	public void fillTiles() {
 		removeAllViews();
-		// load image to slicer
-		Drawable globe = getResources().getDrawable(R.drawable.globe);
-		Bitmap original = ((BitmapDrawable) globe).getBitmap();
+
+		original = PictureTakerActivity.bm;
+		original= Bitmap.createScaledBitmap(original, 500, 500, true);
+		
 		TileSlicer tileSlicer = new TileSlicer(original, GRID_SIZE, getContext());
+		//masterTileOrder = 
 		// order slices
 		if (tileOrder == null) {
-			tileSlicer.randomizeSlices();
-		} else {
+			//tileSlicer.getMasterSliceOrder();
+			tileSlicer.randomizeSlices();	
+		}
+		else {
 			tileSlicer.setSliceOrder(tileOrder);
 		}
 		// fill game board with slices
@@ -143,6 +155,7 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 	 * Handling of touch events. High-level logic for moving tiles on the game
 	 * board.
 	 */
+	@SuppressLint("NewApi")
 	public boolean onTouch(View v, MotionEvent event) {
 		TileView touchedTile = (TileView) v;
 		if (touchedTile.isEmpty() || !touchedTile.isInRowOrColumnOf(emptyTile)) {
@@ -573,6 +586,15 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 			return 0;
 		}
 
+	}
+	public boolean determineWinner(){
+		boolean isWinner = false;
+		//masterTileOrder;
+		if(tileOrder.equals(masterTileOrder)){
+			isWinner = true;
+		}
+		return isWinner;
+		
 	}
 
 }

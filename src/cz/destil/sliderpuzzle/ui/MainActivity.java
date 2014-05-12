@@ -1,5 +1,14 @@
 package cz.destil.sliderpuzzle.ui;
 
+/*
+ * REFERENCES FOR THE 2D Slider Puzzle
+https://github.com/destil/Android-Slider-Puzzle/blob/master/src/cz/destil/sliderpuzzle/ui/GameboardView.java
+http://www.ask-coder.com/3261181/how-to-slide-splitted-images-in-grid-view-for-making-puzzle-game-in-android
+http://denvycom.com/blog/step-by-step-slider-picture-puzzle-game-using-cocos2d-for-android/
+http://kalanir.blogspot.com/2010/02/how-to-split-image-into-chunks-java.html* 
+ * */
+
+
 import java.util.LinkedList;
 
 import android.content.Intent;

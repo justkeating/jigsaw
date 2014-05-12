@@ -19,4 +19,8 @@
     <string name="check_out">Check out my most successful app:</string>
     <!-- Link to the app Settle Up in about screen -->
     <string name="settle_up">&lt;a href="https://play.google.com/store/apps/details?id=cz.destil.settleup">Settle Up&lt;/a</string>
+    <string name="title_activity_picture_taker">PictureTakerActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

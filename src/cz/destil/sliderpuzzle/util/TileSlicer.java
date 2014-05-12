@@ -11,39 +11,37 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import cz.destil.sliderpuzzle.ui.TileView;
 
-/**
+/*	The TileSlicer takes the Bitmap file from the Picture Taker Activity or from the Gallery, and then
+ *  splits the image.
+ *  
+ *  Bases on code from:  http://www.ask-coder.com/3261181/how-to-slide-splitted-images-in-grid-view-for-making-puzzle-game-in-android
  * 
- * Slices original bitmap into tiles and adds border. Provides randomized or
- * ordered access to tiles.
- * 
- * Based on
- * https://github.com/thillerson/Android-Slider-Puzzle/blob/master/src/com
- * /tackmobile/TileServer.java
- * 
- * @author David Vavra
  */
 public class TileSlicer {
 
 	private Bitmap original;
-	private int tileSize, gridSize;
-	private List<Bitmap> slices;
+	private int xtileSize, gridSize, ytileSize;
+	public static List<Bitmap> slices;
 	private int lastSliceServed;
 	private List<Integer> sliceOrder;
 	private Context context;
+	public static List<Bitmap> originalSlices;
 
 	/**
 	 * Initializes TileSlicer.
 	 * 
 	 * @param original
-	 *            Bitmap which should be sliced
+	 * Bitmap which should be sliced
+	 * 
 	 * @param gridSize
-	 *            Grid size, for example 4 for 4x4 grid
+	 * Grid size, for example 4 for 4x4 grid
 	 */
 	public TileSlicer(Bitmap original, int gridSize, Context context) {
 		super();
 		this.original = original;
 		this.gridSize = gridSize;
-		this.tileSize = original.getWidth() / gridSize;
+		this.xtileSize = original.getWidth() / gridSize;
+		this.ytileSize = original.getHeight() / gridSize;
 		this.context = context;
 		slices = new LinkedList<Bitmap>();
 		sliceOriginal();
@@ -52,6 +50,7 @@ public class TileSlicer {
 	/**
 	 * Slices original bitmap and adds border to slices.
 	 */
+	
 	private void sliceOriginal() {
 		int x, y;
 		Bitmap bitmap;
@@ -62,24 +61,27 @@ public class TileSlicer {
 				if (rowI == gridSize - 1 && colI == gridSize - 1) {
 					continue;
 				} else {
-					x = rowI * tileSize;
-					y = colI * tileSize;
+					x = rowI * xtileSize;
+					y = colI * ytileSize;
 					// slice
-					bitmap = Bitmap.createBitmap(original, x, y, tileSize, tileSize);
+					bitmap = Bitmap.createBitmap(original, x, y, xtileSize, ytileSize);
 					// draw border lines
 					Canvas canvas = new Canvas(bitmap);
 					Paint paint = new Paint();
 					paint.setColor(Color.parseColor("#fbfdff"));
-					int end = tileSize - 1;
-					canvas.drawLine(0, 0, 0, end, paint);
-					canvas.drawLine(0, end, end, end, paint);
-					canvas.drawLine(end, end, end, 0, paint);
-					canvas.drawLine(end, 0, 0, 0, paint);
+					int endx = xtileSize - 1;
+					int endy = ytileSize - 1;
+					canvas.drawLine(0, 0, 0, endy, paint);
+					canvas.drawLine(0, endy, endx, endy, paint);
+					canvas.drawLine(endx, endy, endx, 0, paint);
+					canvas.drawLine(endx, 0, 0, 0, paint);
 					slices.add(bitmap);
 				}
 			}
 		}
+	
 		// remove reference to original bitmap
+		originalSlices = slices;
 		original = null;
 	}
 
@@ -140,3 +142,4 @@ public class TileSlicer {
 	}
 
 }
+
