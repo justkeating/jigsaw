@@ -9,37 +9,32 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import cz.destil.sliderpuzzle.data.Coordinate;
 import cz.destil.sliderpuzzle.ui.TileView;
 
-/**
+/*	The TileSlicer takes the Bitmap file from the Picture Taker Activity or from the Gallery, and then
+ *  splits the image.
+ *  
+ *  Bases on code from:  http://www.ask-coder.com/3261181/how-to-slide-splitted-images-in-grid-view-for-making-puzzle-game-in-android
  * 
- * Slices original bitmap into tiles and adds border. Provides randomized or
- * ordered access to tiles.
- * 
- * Based on
- * https://github.com/thillerson/Android-Slider-Puzzle/blob/master/src/com
- * /tackmobile/TileServer.java
- * 
- * @author David Vavra
  */
 public class TileSlicer {
 
 	private Bitmap original;
 	private int xtileSize, gridSize, ytileSize;
-	private List<Bitmap> slices;
+	public static List<Bitmap> slices;
 	private int lastSliceServed;
 	private List<Integer> sliceOrder;
 	private Context context;
-	private List<Integer> masterTileOrder;
+	public static List<Bitmap> originalSlices;
 
 	/**
 	 * Initializes TileSlicer.
 	 * 
 	 * @param original
-	 *            Bitmap which should be sliced
+	 * Bitmap which should be sliced
+	 * 
 	 * @param gridSize
-	 *            Grid size, for example 4 for 4x4 grid
+	 * Grid size, for example 4 for 4x4 grid
 	 */
 	public TileSlicer(Bitmap original, int gridSize, Context context) {
 		super();
@@ -55,9 +50,9 @@ public class TileSlicer {
 	/**
 	 * Slices original bitmap and adds border to slices.
 	 */
+	
 	private void sliceOriginal() {
 		int x, y;
-		//Bitmap newOriginal = Bitmap.createScaledBitmap(original, original.getHeight(), original.getHeight(), true);
 		Bitmap bitmap;
 		lastSliceServed = 0;
 		for (int rowI = 0; rowI < gridSize; rowI++) {
@@ -84,9 +79,10 @@ public class TileSlicer {
 				}
 			}
 		}
+	
 		// remove reference to original bitmap
+		originalSlices = slices;
 		original = null;
-		//masterSliceOrder = getMasterSliceOrder(order)
 	}
 
 	/**
@@ -144,35 +140,6 @@ public class TileSlicer {
 		}
 		return tile;
 	}
-/*	public void getMasterSliceOrder() {
-		List<Bitmap> newSlices = new LinkedList<Bitmap>();
-		for (int o : order) {
-			if (o < slices.size()) {
-				newSlices.add(slices.get(o));
-			} else {
-				// empty slice
-				newSlices.add(null);
-			}
-		}
-		return masterSliceOrder = order;
-		//slices = newSlices;
-		
-		for (int rowI = 0; rowI < 3; rowI++) {
-			for (int colI = 0; colI < 3; colI++) {
-				TileView tile;
-				if (masterTileOrder == null) {
-					tile = getTile();
-				} else {
-					tile = getTile();
-				}
-				tile.coordinate = new Coordinate(rowI, colI);
-				if (tile.isEmpty()) {
-					TileView emptyTile = tile;
-				}
-				//placeTile(tile);
-				//tiles.add(tile);
-			}
-		}
-	}*/
 
 }
+

@@ -1,9 +1,16 @@
 package cz.destil.sliderpuzzle.ui;
 
+/*
+ * REFERENCES FOR THE 2D Slider Puzzle
+https://github.com/destil/Android-Slider-Puzzle/blob/master/src/cz/destil/sliderpuzzle/ui/GameboardView.java
+http://www.ask-coder.com/3261181/how-to-slide-splitted-images-in-grid-view-for-making-puzzle-game-in-android
+http://denvycom.com/blog/step-by-step-slider-picture-puzzle-game-using-cocos2d-for-android/
+http://kalanir.blogspot.com/2010/02/how-to-split-image-into-chunks-java.html* 
+ * */
+
+
 import java.util.LinkedList;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,7 +19,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-import cz.destil.sliderpuzzle.PictureTakerActivity;
 import cz.destil.sliderpuzzle.R;
 
 /**
@@ -37,26 +43,6 @@ public class MainActivity extends SherlockActivity {
 		if (tileOrder != null) {
 			gameBoard.setTileOrder(tileOrder);
 		}
-/*		else{
-			
-			new AlertDialog.Builder(this)
-		    .setTitle("You Won")
-		    .setMessage("Would you like to play again?")
-		    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int which) { 
-		            Intent in = new Intent(MainActivity.this, PictureTakerActivity.class);
-		            startActivity(in);
-		        }
-		     })
-		    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int which) { 
-		            // do nothing
-		        }
-		     })
-		    .setIcon(android.R.drawable.ic_dialog_alert)
-		     .show();
-		}*/
-
 	}
 
 	@Override
