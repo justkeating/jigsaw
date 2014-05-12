@@ -12,6 +12,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
+import cz.destil.sliderpuzzle.PictureTakerActivity;
 import cz.destil.sliderpuzzle.R;
 
 /**
@@ -36,6 +37,25 @@ public class MainActivity extends SherlockActivity {
 		if (tileOrder != null) {
 			gameBoard.setTileOrder(tileOrder);
 		}
+/*		else{
+			
+			new AlertDialog.Builder(this)
+		    .setTitle("You Won")
+		    .setMessage("Would you like to play again?")
+		    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            Intent in = new Intent(MainActivity.this, PictureTakerActivity.class);
+		            startActivity(in);
+		        }
+		     })
+		    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            // do nothing
+		        }
+		     })
+		    .setIcon(android.R.drawable.ic_dialog_alert)
+		     .show();
+		}*/
 
 	}
 

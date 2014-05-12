@@ -57,7 +57,9 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 	private PointF lastDragPoint;
 	private ArrayList<GameTileMotionDescriptor> currentMotionDescriptors;
 	private LinkedList<Integer> tileOrder;
+	private LinkedList<Integer> masterTileOrder;
 	public Bitmap original;
+	//public boolean isWinner = false;
 
 	public GameBoardView(Context context, AttributeSet attrSet) {
 		super(context, attrSet);
@@ -100,22 +102,18 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 	 */
 	public void fillTiles() {
 		removeAllViews();
-		// load image to slicer
-		//Drawable globe = getResources().getDrawable(R.drawable.globe);
-		
-		//add code to access from the gallery. 
-		
-		//add code to access from picture
-		
-		//Bitmap original = ((BitmapDrawable) globe).getBitmap();
+
 		original = PictureTakerActivity.bm;
 		original= Bitmap.createScaledBitmap(original, 500, 500, true);
 		
 		TileSlicer tileSlicer = new TileSlicer(original, GRID_SIZE, getContext());
+		//masterTileOrder = 
 		// order slices
 		if (tileOrder == null) {
-			tileSlicer.randomizeSlices();
-		} else {
+			//tileSlicer.getMasterSliceOrder();
+			tileSlicer.randomizeSlices();	
+		}
+		else {
 			tileSlicer.setSliceOrder(tileOrder);
 		}
 		// fill game board with slices
@@ -588,6 +586,15 @@ public class GameBoardView extends RelativeLayout implements OnTouchListener {
 			return 0;
 		}
 
+	}
+	public boolean determineWinner(){
+		boolean isWinner = false;
+		//masterTileOrder;
+		if(tileOrder.equals(masterTileOrder)){
+			isWinner = true;
+		}
+		return isWinner;
+		
 	}
 
 }

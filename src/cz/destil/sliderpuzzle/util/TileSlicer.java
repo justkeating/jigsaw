@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import cz.destil.sliderpuzzle.data.Coordinate;
 import cz.destil.sliderpuzzle.ui.TileView;
 
 /**
@@ -30,6 +31,7 @@ public class TileSlicer {
 	private int lastSliceServed;
 	private List<Integer> sliceOrder;
 	private Context context;
+	private List<Integer> masterTileOrder;
 
 	/**
 	 * Initializes TileSlicer.
@@ -84,6 +86,7 @@ public class TileSlicer {
 		}
 		// remove reference to original bitmap
 		original = null;
+		//masterSliceOrder = getMasterSliceOrder(order)
 	}
 
 	/**
@@ -141,5 +144,35 @@ public class TileSlicer {
 		}
 		return tile;
 	}
+/*	public void getMasterSliceOrder() {
+		List<Bitmap> newSlices = new LinkedList<Bitmap>();
+		for (int o : order) {
+			if (o < slices.size()) {
+				newSlices.add(slices.get(o));
+			} else {
+				// empty slice
+				newSlices.add(null);
+			}
+		}
+		return masterSliceOrder = order;
+		//slices = newSlices;
+		
+		for (int rowI = 0; rowI < 3; rowI++) {
+			for (int colI = 0; colI < 3; colI++) {
+				TileView tile;
+				if (masterTileOrder == null) {
+					tile = getTile();
+				} else {
+					tile = getTile();
+				}
+				tile.coordinate = new Coordinate(rowI, colI);
+				if (tile.isEmpty()) {
+					TileView emptyTile = tile;
+				}
+				//placeTile(tile);
+				//tiles.add(tile);
+			}
+		}
+	}*/
 
 }

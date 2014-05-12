@@ -23,45 +23,47 @@ import cz.destil.sliderpuzzle.ui.*;
 
 
 public class PictureTakerActivity extends Activity {
+	//constants add the type to the intent in order to use within onActivityResult()
 	public static final int MEDIA_TYPE_IMAGE = 1;
 	public static final int RESULT_LOAD_IMAGE = 3;
+	//This constant is also used within onActivityResult() to authenticate a picture being taken and a result 
+	//being returned
 	public static final int TAKE_PICTURE = 100;
+	
 	Button takePictureButton, selectPictureButton;
-	private Uri fileUri;
+	//bm holds the bitmap in order for the tile slicer to use, this needs to be public in order for the tile slicer to 
+	//use the bitmap image. 
 	public static Bitmap bm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_picture_taker);
-/*		imView1 = (ImageView) findViewById(R.id.imageView1);
-		imView2 = (ImageView) findViewById(R.id.imageView2);
-		imView3 = (ImageView) findViewById(R.id.imageView3);
-		imView4 = (ImageView) findViewById(R.id.imageView4);
-		imView5 = (ImageView) findViewById(R.id.imageView5);
-		imView6 = (ImageView) findViewById(R.id.imageView6);
-		imView7 = (ImageView) findViewById(R.id.imageView7);
-		imView8 = (ImageView) findViewById(R.id.imageView8);
-		imView9 = (ImageView) findViewById(R.id.imageView9);*/
+
 		takePictureButton = (Button) findViewById(R.id.pictureButton);
 		selectPictureButton = (Button) findViewById(R.id.selectPictureButton);
-		
+		//set onclick listener for the picture taker button
 		takePictureButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				//intent creates an intent with the parameter action_image_capture, this causes the application
+				//to call the camera that is built in to the android device
 				Intent in = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-				//in.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+
+				//beings the activity
 				startActivityForResult(in, TAKE_PICTURE);
 			}
 		});
+		//set the onclicklistener for the select picture button, 
 		selectPictureButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+				//creates an intent with ACTION_PICK specification, this creates a nonspecific intent used to select
+				//pictures from the picture gallery
 				Intent inB = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 				startActivityForResult(inB, RESULT_LOAD_IMAGE);
 			}
@@ -74,7 +76,7 @@ public class PictureTakerActivity extends Activity {
 		getMenuInflater().inflate(R.menu.picture_taker, menu);
 		return true;
 	}
-
+	//method handles the result of the call to the intent 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -83,8 +85,10 @@ public class PictureTakerActivity extends Activity {
 			if(resultCode != RESULT_CANCELED){
 				if (resultCode == RESULT_OK){
 					try {
+						//data.getData() produces an object of type Uri, this Uri is used with a content resolver
+						//to return the Bitmap from the Camera. 
 						bm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-						//bm = (Bitmap) data.getExtras().get("data");
+						//creates an intent in order to run the main activity of the game
  						Intent in = new Intent(this, MainActivity.class);
 						startActivity(in);
 					} catch (FileNotFoundException e) {
@@ -115,46 +119,4 @@ public class PictureTakerActivity extends Activity {
 		}
 		
 	}
-	//ANDROID/Media 
-	//http://developer.android.com/guide/topics/media/camera.html#saving-media
-	private static Uri getOutputMediaFileUri(int type){
-	      return Uri.fromFile(getOutputMediaFile(type));
-	}
-	/** Create a File for saving an image or video */
-	@SuppressLint("NewApi")
-	private static File getOutputMediaFile(int type){
-	    // To be safe, you should check that the SDCard is mounted
-	    // using Environment.getExternalStorageState() before doing this.
-
-	    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-	              Environment.DIRECTORY_PICTURES), "TestCameraAppPictures");
-	    // This location works best if you want the created images to be shared
-	    // between applications and persist after your app has been uninstalled.
-
-	    // Create the storage directory if it does not exist
-	    if (! mediaStorageDir.exists()){
-	        if (! mediaStorageDir.mkdirs()){
-	            Log.d("MyCameraApp", "failed to create directory");
-	            return null;
-	        }
-	    }
-	    //Date d = new Date();
-	    // Create a media file name
-	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date(1,4,2007));
-	    File mediaFile;
-	    if (type == MEDIA_TYPE_IMAGE){
-	        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-	        "IMG_"+ timeStamp + ".jpg");
-//	    } else if(type == MEDIA_TYPE_VIDEO) {
-//	        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-//	        "VID_"+ timeStamp + ".mp4");
-	    } else {
-	        return null;
-	    }
-
-	    return mediaFile;
-	}
-
-	
-
 }
